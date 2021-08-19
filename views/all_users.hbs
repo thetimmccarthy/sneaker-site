@@ -1,0 +1,22 @@
+{{#if users}}
+<div class="root">
+    <div class="container">
+    {{#each users}}
+    <div class="card" style="width: 18rem;">
+
+        <div class="card-body">
+            <h5 class="card-title">{{this.username}}</h5>
+            
+            <a href="/user/{{this._id}}" class="btn btn-primary">View User</a>
+        </div>
+    </div>
+    {{/each}}
+    </div>
+</div>
+{{else}}
+    <div class="container">
+        <div class="card">
+            <h3> No users currently - please try back later!</h3>
+        </div>
+    </div>
+{{/if}}

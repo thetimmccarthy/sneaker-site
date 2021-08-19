@@ -1,0 +1,35 @@
+{{#if user}}
+    <div>
+        <h2>{{user.username}}</h2>
+        <br>
+        
+        {{#if shoes}}
+        <div class="root">
+            <div class="container">
+            {{#each shoes}}
+            <div class="card" style="width: 18rem;">
+                {{#if this.picture}}
+                    <img src="../{{this.picture}}" class="card-img-top" alt={{this.picture}}>
+                {{else}}
+                    <img src="/public/download.jpeg" class="card-img-top" alt="downloads">
+                {{/if}}
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}} by {{this.brand.name}}</h5>
+                    <p class="card-text">{{this.desc}}</p>
+                    <a href="/item/{{this._id}}" class="btn btn-primary">View Item</a>
+                </div>
+            </div>
+            {{/each}}
+    
+            </div>
+        </div>
+        {{else}}
+            <h3> We're sorry, this user has no shoes available currently</h3>
+        {{/if}}
+    </div>
+
+{{else}}
+    <div> 
+        <h2> We're sorry, this user is not available currently</h2>
+    </div>
+{{/if}}

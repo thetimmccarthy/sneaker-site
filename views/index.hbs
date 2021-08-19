@@ -1,0 +1,69 @@
+<h1>{{title}}</h1>
+
+<h1> Your #1 destination for buying and selling sneakers!</h1>
+
+
+{{#if items}}
+<div class="root">
+    <div class="container">
+    {{#each items}}
+    <div class="card" style="width: 18rem;">
+        {{#if this.picture}}
+        <img src="{{this.picture}}" class="card-img-top" alt={{this.picture}}>
+        {{else}}
+        <img src="/public/download.jpeg" class="card-img-top" alt="downloads">
+        {{/if}}
+        <div class="card-body">
+            <h5 class="card-title">{{this.name}} by {{this.brand.name}}</h5>
+            <p class="card-text">Owner: {{this.owner.username}}</p>
+            <a href="/item/{{this._id}}" class="btn btn-primary">View Item</a>
+        </div>
+    </div>
+    {{/each}}
+    
+    </div>
+</div>
+{{else}}
+    <div class="container">
+        <div class="card">
+            <h3> No sneakers currently - please try back later!</h3>
+        </div>
+    </div>
+{{/if}}
+
+
+<div>
+    <h2>Users:</h2>
+{{#if users}}
+<div class="root">
+    <div class="container">
+    {{#each users}}
+    <div class="card" style="width: 18rem;">
+
+        <div class="card-body">
+            <h5 class="card-title">{{this.username}}</h5>
+            
+            <a href="/user/{{this._id}}" class="btn btn-primary">View User</a>
+        </div>
+    </div>
+    {{/each}}
+    </div>
+</div>
+{{else}}
+    <div class="container">
+        <div class="card">
+            <h3> No users currently - please try back later!</h3>
+        </div>
+    </div>
+{{/if}}
+</div>
+<br>
+
+<br>
+<div>
+    <form method="GET" action="/item/new"> 
+        <input type="submit" value="Add Sneaker!">
+    </form>
+</div>
+<br>
+

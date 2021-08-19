@@ -1,0 +1,31 @@
+{{#if item}}
+    <div>
+        <form method="POST" action="/item/delete/{{item._id}}">
+            <input type="submit" value="Delete Item">
+        </form>
+        <br>
+        <br>        
+        <h3>{{item.name}} by {{item.brand.name}}</h3>
+        <p>Description: {{item.desc}}</p>
+        <p>Price: ${{item.price}} </p>
+        <p>Category: {{item.category.name}}</p>
+        <p>Size: {{item.size}}</p>
+        <p>Owner: <a href="/user/{{item.owner._id}}"> {{item.owner.username}}</a></p>
+        {{#if item.picture}}
+        <img src="../{{item.picture}}" class="card-img-top" alt={{item.picture}}>
+        {{else}}
+        <div>
+            <form method="GET" action="/item/edit/{{item._id}}"> 
+                <input type="submit" value="Add Picture!">
+            </form>
+        </div>
+        <br>
+        {{!-- <form method="POST" action="/delete/{{item._id}}">
+            <input type="submit" value="Delete Item">
+        </form> --}}
+    </div>
+{{/if}}
+
+
+    
+{{/if}}

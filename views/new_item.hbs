@@ -1,0 +1,50 @@
+<form id="newshoe" method="POST" action="/item/new" enctype="multipart/form-data">
+    <label>List new shoe:</label>
+    <br>
+    <label for="name">Shoe name:</label>
+    <input type="text" id="name" name="name">
+    <br>
+
+    <label for="brand">Brand:</label>
+    <input list="mybrands" name="brand" id="brand">
+    <datalist id="mybrands" >
+        {{#each brands}}
+            <option value={{this.name}}>
+        {{/each}}
+    </datalist>
+    <br>
+
+    <label for="desc"> Description:</label>
+    <input type="text" name="desc" id="desc">
+    <br>
+
+    
+    {{!-- <select name="category" id="category">
+        <option selected="selected">Choose Category</option>
+        {{#each categories}}
+            <option value={{this._id}}>{{this.name}}</option>
+        {{/each}}
+    </select> --}}
+    <label for="category">Shoe Category:</label>
+    <input list="mycategories" name="category" id="category">
+    <datalist id="mycategories" >
+        {{#each categories}}
+            <option value={{this.name}}>
+        {{/each}}
+    </datalist>
+    <br>
+ 
+    <label for="price">Price:</label>
+    <input type="number" name="price" id="price">
+    <br>
+
+    <label for="size">Size</label>
+    <input type="number" name="size" id="size">
+    <br>
+
+    <input type="file" name="file" />
+    <br>
+
+    <input type="submit" value="submit">
+</form>
+

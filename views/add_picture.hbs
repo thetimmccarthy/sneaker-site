@@ -1,0 +1,26 @@
+<div class="container">
+    {{#if item}}
+    <div>
+        
+        <h3>{{item.name}} by {{item.brand.name}}</h3>
+        <p>Description: {{item.desc}}</p>
+        <p>Price: ${{item.price}} </p>
+        <p>Category: {{item.category.name}}</p>
+        <br>
+        <div>
+            <form method="POST" action="/item/edit/{{item._id}}" enctype="multipart/form-data"> 
+                <input type="file" name="file" />
+                <br>
+                <br>
+                <input type="submit" value="Add Picture!">
+            </form>
+        </div>        
+
+    </div>
+{{else }}
+
+    <h3> Oops! Something went wrong. Click <a href='/'>here</a> to go home!</h3>
+{{/if}}
+
+
+</div>

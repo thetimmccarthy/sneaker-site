@@ -1,0 +1,27 @@
+{
+  "name": "express-sneakersite",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "mongoose": "^5.13.5",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.3",
+    "sharp": "^0.29.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
