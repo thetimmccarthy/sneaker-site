@@ -1,6 +1,5 @@
 var multer = require('multer');
 var path = require('path');
-const mkdirp = require('mkdirp');
 const sharp = require('sharp');
 const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs');
