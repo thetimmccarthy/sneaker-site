@@ -3,7 +3,6 @@ var path = require('path');
 const mkdirp = require('mkdirp');
 const sharp = require('sharp');
 const S3 = require('aws-sdk/clients/s3');
-const multerS3 = require('multer-s3');
 const fs = require('fs');
 const { nanoid } = require('nanoid')
 const { Readable } = require('stream')
