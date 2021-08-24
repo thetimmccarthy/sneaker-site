@@ -185,7 +185,7 @@ exports.index_post_id_edit = async (req, res, next) => {
     let query = {'_id': id}
     console.log("LOCATION: ", req.file.location);
     await uploadFile(req.file);
-    let item = await itemModel.findByIdAndUpdate(query, {picture: req.file.new_filename}, {
+    let item = await itemModel.findByIdAndUpdate(query, {picture: key}, {
         new: true
     });
     
