@@ -17,4 +17,6 @@ router.post('/edit/:id', uploadFile, resizeImage, itemsController.index_post_id_
 
 router.post('/delete/:id', itemsController.index_delete_id);
 
+router.get('/image/:id', itemsController.image_get)
+
 module.exports = router;

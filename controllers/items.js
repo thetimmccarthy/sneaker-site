@@ -3,6 +3,7 @@ var brandModel = require('../models/brand');
 const categoryModel = require('../models/category');
 const async = require('async')
 const ObjectId = require('mongodb').ObjectID;
+var {resizeImage, uploadFile, upload, getFileStream} = require('../controllers/images');
 
 exports.index_get = function(req, res, next) {
     itemModel.find().populate('brand').populate('owner').sort({'name': 1}).exec((err, items) => {
@@ -38,13 +39,17 @@ exports.index_new_get = function(req, res, next) {
 }
 
 //  POST /items/new -> adds new sneaker to list of sneakers
-exports.index_new_post = function(req, res, next) {
+exports.index_new_post = async function(req, res, next) {
     async.parallel({
         brands: function(callback) {
             getBrands(callback);
         },
         categories: function(callback) {
             getCategories(callback);
+        }, 
+        upload: function(callback) {
+            uploadFile(req.file);
+            callback(null, true);
         }
     }, 
     function(err, results) {
@@ -52,14 +57,16 @@ exports.index_new_post = function(req, res, next) {
             console.error(err);
             res.redirect('/');
         }
-        console.log(req.file);
+
         let name = req.body.name;
         let desc = req.body.desc;
         let category = req.body.category;
         let brand = req.body.brand;
         let price = req.body.price;
         let size = req.body.size;  
-        let picturePath = req.file.new_filename
+        let picturePath = req.file.key
+        
+        
         
         brands = results.brands
         categories = results.categories
@@ -136,7 +143,8 @@ exports.index_new_post = function(req, res, next) {
                 }
             // res.redirect('/')
             })
-        res.redirect('/')
+        // res.redirect('/')
+        res.send(`/images/${picturePath}`)
         })
     })
     
@@ -175,6 +183,8 @@ exports.index_get_id_edit = (req, res, next) => {
 exports.index_post_id_edit = async (req, res, next) => {
     let id = req.params.id;
     let query = {'_id': id}
+    console.log("LOCATION: ", req.file.location);
+    await uploadFile(req.file);
     let item = await itemModel.findByIdAndUpdate(query, {picture: req.file.new_filename}, {
         new: true
     });
@@ -195,6 +205,13 @@ exports.index_delete_id = (req, res, next) => {
         }
     });
     
+}
+
+exports.image_get = (req, res, next) => {
+    const key = req.params.id;
+    const readStream = getFileStream(key);
+    console.log('Trying to get file!!')
+    readStream.pipe(res);
 }
 
 // ****************
