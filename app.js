@@ -9,7 +9,7 @@ var cors = require('cors');
 
 const mongoose = require('mongoose')
 const mongodbstring = process.env.MONGO_DB;
-mongoose.connect(mongodbstring, {newUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongodbstring, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Mongo connnection error'));
 
