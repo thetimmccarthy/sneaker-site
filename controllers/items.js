@@ -3,7 +3,7 @@ var brandModel = require('../models/brand');
 const categoryModel = require('../models/category');
 const async = require('async')
 const ObjectId = require('mongodb').ObjectID;
-var {resizeImage, uploadFile, upload, getFileStream} = require('../controllers/images');
+var {resizeImage, upload, uploadFile, getFileStream, deleteFile} = require('../controllers/images');
 
 exports.index_get = function(req, res, next) {
     itemModel.find().populate('brand').populate('owner').sort({'name': 1}).exec((err, items) => {
@@ -143,8 +143,8 @@ exports.index_new_post = async function(req, res, next) {
                 }
             // res.redirect('/')
             })
-        // res.redirect('/')
-        res.send(`/images/${picturePath}`)
+        res.redirect('/')
+        // res.send(`/images/${picturePath}`)
         })
     })
     
@@ -192,9 +192,11 @@ exports.index_post_id_edit = async (req, res, next) => {
     res.redirect(`/item/${id}`);
 }
 
-exports.index_delete_id = (req, res, next) => {
+exports.index_delete_id = async (req, res, next) => {
     let id = req.params.id;
     let query = {'_id': id};
+
+    await deleteFile(id);
 
     itemModel.findOneAndRemove(query, (err, result) => {
         if (err) {
@@ -210,7 +212,7 @@ exports.index_delete_id = (req, res, next) => {
 exports.image_get = (req, res, next) => {
     const key = req.params.id;
     const readStream = getFileStream(key);
-    console.log('Trying to get file!!')
+    
     readStream.pipe(res);
 }
 

@@ -18,6 +18,7 @@ const s3 = new S3({
 });
 
 function uploadFile(file) {
+    
     const fileStream = Readable.from(file.buffer);
     console.log('FILENAME: ', file);
     const uploadParams = {
@@ -39,6 +40,15 @@ function getFileStream(fileKey) {
     return s3.getObject(downloadParams).createReadStream();
 }
 
+function deleteFile(fileKey) {
+    const deletParams = {
+        Key: fileKey,
+        Bucket: bucketName,
+    }
+
+    s3.deleteObject(deleteParams).promise();
+}
+
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
@@ -54,15 +64,13 @@ const upload = uploadMulter.single('file');
 
 const resizeImage = async (req, res, next) => {
     if (!req.file){ 
-        
         return next(); 
     }
-  
 
     await sharp(req.file.buffer)
         .resize(288, 160)
     const key = nanoid()  
-    //   req.file.filename = key + path.extname(req.file.originalname);
+    
     req.file.filename = key;
     req.file.key = key;
     console.log('FILE: ', req.file);
@@ -74,7 +82,8 @@ module.exports = {
     resizeImage,
     upload,
     uploadFile, 
-    getFileStream
+    getFileStream,
+    deleteFile
 }
 
 
