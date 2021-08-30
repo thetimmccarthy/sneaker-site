@@ -11,14 +11,15 @@ exports.login_post = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const passwordsMatch = await bcrypt.compare(password, item.password);
+    
 
-    userModel.find().exec((err, user) => {
+    userModel.find().exec(async (err, user) => {
         if (err) {
             console.error(err);
             res.redirect('/');
         }
-        
+
+        const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if(passwordsMatch) {
             req.sessions.username = username;
