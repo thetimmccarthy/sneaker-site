@@ -13,16 +13,20 @@ exports.login_post = async (req, res) => {
 
     
 
-    userModel.find().exec((err, user) => {
+    userModel.find({'username': username}).exec((err, user) => {
         if (err) {
             console.error(err);
             res.redirect('/');
         }
-        const passwordsMatch = password === user.password;
+        console.log(user)
+        console.log(password, user[0].password)
+        const passwordsMatch = password === user[0].password;
         // const passwordsMatch = await bcrypt.compare(password, user.password);
 
         if(passwordsMatch) {
-            req.sessions.username = username;
+            
+            req.session.username = username;
+            console.log(req.session);
             res.redirect('/');
 
             
@@ -30,7 +34,7 @@ exports.login_post = async (req, res) => {
             errors = [{
                 msg: 'Email not registered, please create an account.'
             }]
-            res.redirect('/login', {error: errors}); 
+            res.render('login', {errors: errors}); 
         }
     })
 }
