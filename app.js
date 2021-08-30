@@ -6,6 +6,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser')
 require('dotenv').config();
 var cors = require('cors');
+var session = require('express-session');
+var mongoDBStore = require('connect-mongodb-session')(session);
 
 const mongoose = require('mongoose')
 const mongodbstring = process.env.MONGO_DB;
@@ -20,6 +22,28 @@ var categoryRouter = require('./routes/category')
 
 var app = express();
 
+var store = new mongoDBStore({
+  uri: process.env.MONGO_DB,
+  collection: 'sessions'
+});
+
+store.on('error', (error) => {
+  console.error(error);
+})
+
+// TODO: May need to add check to see if prod or dev
+app.use(session({
+  secret: 'THISISTHESECRET',
+  cookie: {
+    maxAge: 1000*60*60*2
+  },
+  store: store,
+  resave: true,
+  saveUninitialized: true
+}));
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -30,6 +54,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, '/public')));
 // app.use(cors);
+
+// TODO: THINKING ABOUT SESSIONS - need to be logged in to write data, but not to read/view
+
+// app.use((req, res, next) => {
+//   if (!req.session.username) {
+//     res.redirect('/login');
+//   } else {
+//     next();
+//   }
+// })
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
@@ -51,5 +85,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
