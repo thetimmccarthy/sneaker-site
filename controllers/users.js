@@ -21,7 +21,6 @@ exports.user_id_get = function(req, res, next) {
             
             res.redirect('/');
         }
-        console.log(results)
         res.render('single_user', {user:results.user[0], shoes: results.shoes});
     } 
     )

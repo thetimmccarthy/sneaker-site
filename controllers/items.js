@@ -136,15 +136,12 @@ exports.index_new_post = async function(req, res, next) {
         var item = new itemModel(itemdetail);
         item.save(err => {
             if (err) {
-                console.log('WRONG')
                 console.error(err);
                 // TODO: add in error statement for when new item is created incorrectly
-                
-                }
-            // res.redirect('/')
+                }            
             })
         res.redirect('/')
-        // res.send(`/images/${picturePath}`)
+        
         })
     })
     
@@ -183,7 +180,6 @@ exports.index_get_id_edit = (req, res, next) => {
 exports.index_post_id_edit = async (req, res, next) => {
     let id = req.params.id;
     let query = {'_id': id}
-    console.log("LOCATION: ", req.file.location);
     await uploadFile(req.file);
     let item = await itemModel.findByIdAndUpdate(query, {picture: req.file.key}, {
         new: true

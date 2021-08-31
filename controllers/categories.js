@@ -18,13 +18,11 @@ exports.index_get = function(req, res, next) {
 exports.index_get_id = function(req, res, next) {
 
     let id = req.params.id
-    console.log(id)
     itemModel.find({category: ObjectId(id)}).populate('brand').populate('owner').exec((err, result) => {
         if (err) {
             console.error(err);
             res.redirect('/');
         }
-        console.log(result)
         res.render('single_category', {items: result})
     })
 

@@ -20,6 +20,7 @@ var usersRouter = require('./routes/users');
 var itemsRouter = require('./routes/item')
 var categoryRouter = require('./routes/category')
 var loginRouter = require('./routes/login');
+var registerRouter = require('./routes/register');
 
 var app = express();
 
@@ -56,21 +57,12 @@ app.use(cookieParser());
 app.use('/public', express.static(path.join(__dirname, '/public')));
 // app.use(cors);
 
-// TODO: THINKING ABOUT SESSIONS - need to be logged in to write data, but not to read/view
-
-// app.use((req, res, next) => {
-//   if (!req.session.username) {
-//     res.redirect('/login');
-//   } else {
-//     next();
-//   }
-// })
-
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/item', itemsRouter)
 app.use('/category', categoryRouter)
 app.use('/login', loginRouter)
+app.use('/register', registerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
