@@ -168,7 +168,7 @@ exports.index_get_id = function(req, res, next) {
             sessionOwnsShoe = false;
         }
 
-        res.render('single_item', {item: result[0]}, sessionOwnsShoe);
+        res.render('single_item', {item: result[0], sesion: sessionOwnsShoe});
     })
 
 }
