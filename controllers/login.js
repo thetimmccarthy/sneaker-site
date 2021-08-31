@@ -19,14 +19,11 @@ exports.login_post = async (req, res) => {
             res.redirect('/');
         }
         
-        
-        // const passwordsMatch = password === user[0].password;
         const passwordsMatch = await bcrypt.compare(password, user[0].password);
 
         if(passwordsMatch) {
             
             req.session.username = username;
-            console.log(req.session);
             res.redirect('/');
 
             

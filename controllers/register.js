@@ -11,9 +11,7 @@ exports.register_post = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    
-
-    userModel.find({'username': username}).exec(async (err, user) => {
+    userModel.find({'username': username}).exec(async (err, user) => {        
         if (err) {
             console.error(err);
             res.redirect('/');
@@ -41,25 +39,6 @@ exports.register_post = async (req, res) => {
 
             req.session.username = username;
             res.redirect('/');
-
-        }
-        
-        
-        
-        
-
-        if(passwordsMatch) {
-            
-            req.session.username = username;
-            console.log(req.session);
-            res.redirect('/');
-
-            
-        } else { 
-            errors = [{
-                msg: 'Email not registered, please create an account.'
-            }]
-            res.render('login', {errors: errors}); 
         }
     })
 }

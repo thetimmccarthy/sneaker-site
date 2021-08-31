@@ -20,7 +20,7 @@ const s3 = new S3({
 function uploadFile(file) {
     
     const fileStream = Readable.from(file.buffer);
-    console.log('FILENAME: ', file);
+    
     const uploadParams = {
         Bucket: bucketName,
         Body: fileStream,
@@ -73,7 +73,7 @@ const resizeImage = async (req, res, next) => {
     
     req.file.filename = key;
     req.file.key = key;
-    console.log('FILE: ', req.file);
+    
 
     next()
 }

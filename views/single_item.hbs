@@ -1,8 +1,10 @@
 {{#if item}}
     <div>
+        {{#if session}}
         <form method="POST" action="/item/delete/{{item._id}}">
             <input type="submit" value="Delete Item">
         </form>
+        {{/if}}
         <br>
         <br>        
         <h3>{{item.name}} by {{item.brand.name}}</h3>

@@ -5,7 +5,7 @@
 
 {{#if items}}
 <div class="root">
-    <div class="container">
+    <div class="d-flex">
     {{#each items}}
     <div class="card" style="width: 18rem;">
         {{#if this.picture}}
@@ -60,10 +60,12 @@
 <br>
 
 <br>
+{{#if session}}
 <div>
     <form method="GET" action="/item/new"> 
         <input type="submit" value="Add Sneaker!">
     </form>
 </div>
+{{/if}}
 <br>
 

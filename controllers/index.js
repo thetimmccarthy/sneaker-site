@@ -20,11 +20,12 @@ exports.index_get = function(req, res, next) {
         }
     },
     function(err, results) {
+        const session = req.session.username !== undefined ? true : false
         if (err) {
             console.error(err);
             res.render('index', {title: 'Sneakersite'})
         }
-        res.render('index', {title: 'Sneakersite', items:results.items, users:results.users, categories:results.categories, brands:results.brands})
+        res.render('index', {title: 'Sneakersite', items:results.items, users:results.users, categories:results.categories, brands:results.brands, session: session})
     }
     )
     

@@ -28,8 +28,12 @@ exports.index_new_get = function(req, res, next) {
         }
     }, 
     function(err, results) {
+        
+        
+
         if(err) {
             console.error(err);
+            
             res.redirect('/');
         }
         
@@ -53,6 +57,7 @@ exports.index_new_post = async function(req, res, next) {
         }
     }, 
     function(err, results) {
+        
         if(err) {
             console.error(err);
             res.redirect('/');
@@ -66,11 +71,8 @@ exports.index_new_post = async function(req, res, next) {
         let size = req.body.size;  
         let picturePath = req.file.key
         
-        
-        
         brands = results.brands
         categories = results.categories
-        console.log('results ', results)
         
         brandId = null
         categoryId = null
@@ -159,12 +161,20 @@ exports.index_get_id = function(req, res, next) {
             res.redirect('/');
         }
         
-        res.render('single_item', {item: result[0]})
+        let sessionOwnsShoe;
+        try {
+            sessionOwnsShoe = req.session.username === result[0].owner.username ? true : false
+        } catch (error) {
+            sessionOwnsShoe = false;
+        }
+
+        res.render('single_item', {item: result[0]}, sessionOwnsShoe);
     })
 
 }
 
 exports.index_get_id_edit = (req, res, next) => {
+    
     let id = req.params.id;
     itemModel.find({'_id': id}).populate('brand').populate('category').populate('owner').exec((err, result) => {
         if (err) {
@@ -217,6 +227,7 @@ exports.image_get = (req, res, next) => {
 // ****************
 function getBrands(cb) {
     brandModel.find().select('name').exec((err, brands) => {
+        
         if (err) {
             cb(err,null)
             res.redirect('/');
@@ -227,6 +238,7 @@ function getBrands(cb) {
 }
 
 function getCategories(cb) {
+    
     categoryModel.find().select('name').exec((err, categories) => {
         if (err) {
             cb(err,null)
