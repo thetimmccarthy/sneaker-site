@@ -6,6 +6,7 @@ var userModel = require('../models/user')
 /* GET users listing. */
 router.get('/', userController.users_get);
 
+/* GET specific user */
 router.get('/:id', userController.user_id_get)
 
 module.exports = router;
