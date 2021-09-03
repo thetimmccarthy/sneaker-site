@@ -1,6 +1,7 @@
 var itemModel = require('../models/item');
 var brandModel = require('../models/brand');
 const categoryModel = require('../models/category');
+const userModel = require('../models/user')
 const async = require('async')
 const ObjectId = require('mongodb').ObjectID;
 var {resizeImage, upload, uploadFile, getFileStream, deleteFile} = require('../controllers/images');
@@ -26,17 +27,14 @@ exports.index_new_get = function(req, res, next) {
         categories: function(callback) {
             getCategories(callback);
         }
+        
     }, 
     function(err, results) {
-        
-        
-
         if(err) {
             console.error(err);
             
             res.redirect('/');
         }
-        
         res.render('new_item', {brands:results.brands, categories: results.categories})
     })
     
@@ -133,20 +131,28 @@ exports.index_new_post = async function(req, res, next) {
                 console.error(err);
             }
             
-        
-        var itemdetail = {name:name, desc:desc, price:price, size:size, brand: ObjectId(saveResults.brand), category: ObjectId(saveResults.cat), owner: ObjectId("610c13053ebc2efed02fdf72"), picture: picturePath}
-        var item = new itemModel(itemdetail);
-        item.save(err => {
+        const username = req.session.username; 
+        const userId = userModel.find({'username': username}).exec((err, result) => {
             if (err) {
                 console.error(err);
-                // TODO: add in error statement for when new item is created incorrectly
-                }            
-            })
+                res.redirect('/');
+            }
+
+            console.log(result)
+            
+            var itemdetail = {name:name, desc:desc, price:price, size:size, brand: ObjectId(saveResults.brand), category: ObjectId(saveResults.cat), owner: result[0]._id, picture: picturePath}
+            var item = new itemModel(itemdetail);
+            item.save(err => {
+                if (err) {
+                    console.error(err);
+                    // TODO: add in error statement for when new item is created incorrectly
+                    }            
+                })
+        })  
         res.redirect('/')
         
         })
     })
-    
 }  
     
 
@@ -159,18 +165,15 @@ exports.index_get_id = function(req, res, next) {
         if (err) {
             console.error(err);
             res.redirect('/');
-        }
-        
+        }        
         let sessionOwnsShoe;
         try {
             sessionOwnsShoe = req.session.username === result[0].owner.username ? true : false
         } catch (error) {
             sessionOwnsShoe = false;
         }
-
         res.render('single_item', {item: result[0], sesion: sessionOwnsShoe});
     })
-
 }
 
 exports.index_get_id_edit = (req, res, next) => {
