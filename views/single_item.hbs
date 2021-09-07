@@ -16,11 +16,13 @@
         {{#if item.picture}}
         <img src="/item/image/{{item.picture}}" class="card-img-top" alt={{item.picture}}>
         {{else}}
+        {{#if session}}
         <div>
             <form method="GET" action="/item/edit/{{item._id}}"> 
                 <input type="submit" value="Add Picture!">
             </form>
         </div>
+        {{/if}}
         <br>
         {{!-- <form method="POST" action="/delete/{{item._id}}">
             <input type="submit" value="Delete Item">
