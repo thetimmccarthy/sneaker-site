@@ -21,6 +21,7 @@ var itemsRouter = require('./routes/item')
 var categoryRouter = require('./routes/category')
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
+var userModel = require('./models/user');
 
 var app = express();
 
@@ -44,7 +45,23 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
+app.use('/', function(req, res, next) {
+  if (req.session.username) {
+    userModel.find({'username': req.session.username}).exec((err, result) => {
+      if(err) {
+        console.error(err);
+      } else {
+        let id = result[0]._id;
+        res.locals.session = {
+          username: req.session.username,
+          id: id
+        }
+      }      
+    })
+  }
+  
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -80,6 +97,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
+// app.use(getSessionUserId);
 
 
 module.exports = app;

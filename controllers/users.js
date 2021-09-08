@@ -32,9 +32,7 @@ exports.users_get = function(req, res, next) {
           console.error(err);
           res.redirect('/');
         }
-    
-        res.render('all_users', {users:results});
-    
+        res.render('all_users', {users: results});
       })  
 }
 

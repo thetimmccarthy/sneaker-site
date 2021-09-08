@@ -5,15 +5,18 @@ const userModel = require('../models/user')
 const async = require('async')
 const ObjectId = require('mongodb').ObjectID;
 var {resizeImage, upload, uploadFile, getFileStream, deleteFile} = require('../controllers/images');
+const { title } = require('./naming');
 
-exports.index_get = function(req, res, next) {
+
+
+exports.index_get = function(req, res, next) {    
     itemModel.find().populate('brand').populate('owner').sort({'name': 1}).exec((err, items) => {
         if (err) {
             console.error(err);
-            res.render('index', { title: 'Sneakersite'});
+            res.render('index', { title: title});
         }     
         
-        res.render('all_items', { title: 'Sneakersite', items: items });
+        res.render('all_items', { title: title, items: items});
     })
     
   };
