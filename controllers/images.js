@@ -41,7 +41,7 @@ function getFileStream(fileKey) {
 }
 
 function deleteFile(fileKey) {
-    const deletParams = {
+    const deleteParams = {
         Key: fileKey,
         Bucket: bucketName,
     }
