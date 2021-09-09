@@ -224,7 +224,6 @@ exports.index_delete_id = async (req, res, next) => {
 exports.image_get = (req, res, next) => {
     const key = req.params.id;
     const readStream = getFileStream(key);
-    
     readStream.pipe(res);
 }
 

@@ -14,6 +14,7 @@
         <p>Size: {{item.size}}</p>
         <p>Owner: <a href="/user/{{item.owner._id}}"> {{item.owner.username}}</a></p>
         {{#if item.picture}}
+        
         <img src="/item/image/{{item.picture}}" class="card-img-top" alt={{item.picture}}>
         {{else}}
         {{#if session}}
