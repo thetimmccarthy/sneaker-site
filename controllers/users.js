@@ -4,6 +4,7 @@ const categoryModel = require('../models/category');
 const userModel = require('../models/user');
 const async = require('async')
 const ObjectId = require('mongodb').ObjectID;
+const { title } = require('./naming')
 
 exports.user_id_get = function(req, res, next) {
     const id = req.params.id
@@ -21,7 +22,7 @@ exports.user_id_get = function(req, res, next) {
             
             res.redirect('/');
         }
-        res.render('single_user', {user:results.user[0], shoes: results.shoes});
+        res.render('single_user', {user:results.user[0], shoes: results.shoes, title: title});
     } 
     )
 }
@@ -32,7 +33,7 @@ exports.users_get = function(req, res, next) {
           console.error(err);
           res.redirect('/');
         }
-        res.render('all_users', {users: results});
+        res.render('all_users', {users: results, title: title});
       })  
 }
 

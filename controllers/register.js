@@ -1,9 +1,10 @@
 const userModel = require('../models/user');
 const async = require('async');
 const bcrypt = require('bcrypt');
+const { title } = require('./naming')
 
 exports.register_get = (req, res) => {
-    res.render('register')
+    res.render('register', {title: title})
 }
 
 
@@ -33,7 +34,7 @@ exports.register_post = async (req, res) => {
                     errors = [{
                         msg: 'Error - Please Try Again'
                     }]
-                    res.render('register', {errors: errors}); 
+                    res.render('register', {errors: errors, title: title}); 
                 }
             });
 

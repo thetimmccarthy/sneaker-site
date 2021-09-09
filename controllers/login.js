@@ -1,9 +1,9 @@
 const userModel = require('../models/user');
 const async = require('async');
 const bcrypt = require('bcrypt');
-
+const { title } = require('./naming')
 exports.login_get = (req, res) => {
-    res.render('login')
+    res.render('login', {title: title})
 }
 
 
@@ -31,7 +31,7 @@ exports.login_post = async (req, res) => {
             errors = [{
                 msg: 'Email not registered, please create an account.'
             }]
-            res.render('login', {errors: errors}); 
+            res.render('login', {title: title, errors: errors}); 
         }
     })
 }

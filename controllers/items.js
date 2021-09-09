@@ -38,7 +38,7 @@ exports.index_new_get = function(req, res, next) {
             
             res.redirect('/');
         }
-        res.render('new_item', {brands:results.brands, categories: results.categories})
+        res.render('new_item', {brands:results.brands, categories: results.categories, title: title})
     })
     
 }
@@ -175,7 +175,7 @@ exports.index_get_id = function(req, res, next) {
         } catch (error) {
             sessionOwnsShoe = false;
         }
-        res.render('single_item', {item: result[0], sesion: sessionOwnsShoe});
+        res.render('single_item', {item: result[0], sesion: sessionOwnsShoe, title: title});
     })
 }
 
@@ -188,7 +188,7 @@ exports.index_get_id_edit = (req, res, next) => {
             res.redirect('/');
         }
         else {
-        res.render('add_picture', {item: result[0]})
+        res.render('add_picture', {item: result[0], title: title})
         }
     })
 }
