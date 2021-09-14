@@ -8,7 +8,6 @@
             <p>Category: {{item.category.name}}</p>
             <p>Size: {{item.size}}</p>
             <p>Owner: <a href="/user/{{item.owner._id}}"> {{item.owner.username}}</a></p>
-            {{#if item.picture}}
             <br>
         {{#if session}}
             <form method="POST" action="/item/delete/{{item._id}}">
@@ -16,15 +15,15 @@
             </form> 
         {{/if}}
         </div>
-        {{if item.picture}}
-        <img src="/item/image/{{item.picture}}" class="card-img-top" alt={{item.picture}}>
+        {{#if item.picture}}
+            <img src="/item/image/{{item.picture}}" class="card-img-top" alt={{item.picture}}>
         {{else}}
 
-        <div>
-            <form method="GET" action="/item/edit/{{item._id}}"> 
-                <input type="submit" value="Add Picture!">
-            </form>
-        </div>
+            <div>
+                <form method="GET" action="/item/edit/{{item._id}}"> 
+                    <input type="submit" value="Add Picture!">
+                </form>
+            </div>
         {{/if}}
         
         

@@ -1,6 +1,7 @@
 <h1>{{title}} : Your #1 destination for buying and selling sneakers!</h1>
 
 {{#if items}}
+
 <div class="root">
     <div class="container">
     {{#each items}}
@@ -8,7 +9,6 @@
         {{#if this.picture}}
         <img src="/item/image/{{this.picture}}" class="card-img-top" alt={{this.picture}}> 
         
-        {{else}}
         
         {{/if}}
         <div class="card-body">

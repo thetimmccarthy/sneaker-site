@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser')
 require('dotenv').config();
 var cors = require('cors');
 var session = require('express-session');
@@ -44,21 +45,23 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use('/', function(req, res, next) {
+app.use(function(req, res, next) {
   if (req.session.username) {
     userModel.find({'username': req.session.username}).exec((err, result) => {
       if(err) {
-        console.error(err);
-      } else {
+        console.error(err);        
+      } else {        
         let id = result[0]._id;
         res.locals.session = {
           username: req.session.username,
           id: id
-        }
-      }      
+        }  
+      }   
+      next()   
     })
+  } else {
+    next();
   }
-  next();
 });
 
 // view engine setup
@@ -87,17 +90,13 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log(err)
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
-
-
-// app.use(getSessionUserId);
-
-
 module.exports = app;
+

@@ -13,7 +13,7 @@ exports.index_get = function(req, res, next) {
     itemModel.find().populate('brand').populate('owner').sort({'name': 1}).exec((err, items) => {
         if (err) {
             console.error(err);
-            res.render('index', { title: title});
+            res.redirect('/')
         }     
         
         res.render('all_items', { title: title, items: items});
@@ -130,7 +130,7 @@ exports.index_new_post = async function(req, res, next) {
         }, 
         function(err, saveResults) {
             if(err) {
-                console.log("ERROR");
+                
                 console.error(err);
             }
             
@@ -139,9 +139,7 @@ exports.index_new_post = async function(req, res, next) {
             if (err) {
                 console.error(err);
                 res.redirect('/');
-            }
-
-            console.log(result)
+            }            
             
             var itemdetail = {name:name, desc:desc, price:price, size:size, brand: ObjectId(saveResults.brand), category: ObjectId(saveResults.cat), owner: result[0]._id, picture: picturePath}
             var item = new itemModel(itemdetail);
@@ -164,18 +162,13 @@ exports.index_get_id = function(req, res, next) {
     
     let id = req.params.id
     
-    itemModel.find({'_id': id}).populate('brand').populate('category').populate('owner').exec((err, result) => {
+    itemModel.find({'_id': ObjectId(id)}).populate('brand').populate('category').populate('owner').exec((err, result) => {
         if (err) {
             console.error(err);
             res.redirect('/');
         }        
-        let sessionOwnsShoe;
-        try {
-            sessionOwnsShoe = req.session.username === result[0].owner.username ? true : false
-        } catch (error) {
-            sessionOwnsShoe = false;
-        }
-        res.render('single_item', {item: result[0], sesion: sessionOwnsShoe, title: title});
+        
+        res.render('single_item', {item: result[0], title: title});
     })
 }
 

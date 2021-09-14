@@ -22,7 +22,7 @@ exports.index_get = function(req, res, next) {
     },
     function(err, results) {
         
-
+        
         if (err) {
             console.error(err);
             res.render('index', {title: title})
