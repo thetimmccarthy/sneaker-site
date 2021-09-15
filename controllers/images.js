@@ -2,7 +2,6 @@ var multer = require('multer');
 var path = require('path');
 const sharp = require('sharp');
 const S3 = require('aws-sdk/clients/s3');
-const fs = require('fs');
 const { nanoid } = require('nanoid')
 const { Readable } = require('stream')
 
@@ -66,16 +65,30 @@ const resizeImage = async (req, res, next) => {
     if (!req.file){ 
         return next(); 
     }
-
-    await sharp(req.file.buffer)
-        .resize(288, 160)
-    const key = nanoid()  
     
-    req.file.filename = key;
-    req.file.key = key;
+    let dimensions = sizeOf(req.file.buffer);
+    console.log(dimensions.width, dimensions.height);
     
 
-    next()
+    sharp(req.file.buffer)
+    .resize(840, 840)
+    .toBuffer()
+    .then(result => {
+        
+        const key = nanoid()  
+    
+        req.file.buffer = result;
+        req.file.filename = key;
+        req.file.key = key;
+        
+
+        next()
+    })
+    .catch(err => {
+        console.error(err);
+        next();
+    })
+
 }
 
 module.exports = {
