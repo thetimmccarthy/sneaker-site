@@ -9,7 +9,7 @@
             <p>Size: {{item.size}}</p>
             <p>Owner: <a href="/user/{{item.owner._id}}"> {{item.owner.username}}</a></p>
             <br>
-        {{#if session}}
+        {{#if owner}}
             <form method="POST" action="/item/delete/{{item._id}}">
                 <input type="submit" value="Delete Item">
             </form> 

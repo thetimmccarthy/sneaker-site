@@ -65,10 +65,6 @@ const resizeImage = async (req, res, next) => {
     if (!req.file){ 
         return next(); 
     }
-    
-    let dimensions = sizeOf(req.file.buffer);
-    console.log(dimensions.width, dimensions.height);
-    
 
     sharp(req.file.buffer)
     .resize(840, 840)

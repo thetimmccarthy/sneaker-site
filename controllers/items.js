@@ -167,8 +167,14 @@ exports.index_get_id = function(req, res, next) {
             console.error(err);
             res.redirect('/');
         }        
-        
-        res.render('single_item', {item: result[0], title: title});
+        let owner = false;
+        if (req.session.username) {
+            owner = req.session.username === result[0].owner.username
+            console.log(req.session.username);
+            console.log(result[0].owner.username)
+        }
+
+        res.render('single_item', {item: result[0], title: title, owner: owner});
     })
 }
 

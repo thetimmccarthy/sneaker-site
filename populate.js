@@ -11,6 +11,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async')
+const bcrypt = require('bcrypt');
 var Item = require('./models/item')
 var Brand = require('./models/brand')
 var Category = require('./models/category')
@@ -83,8 +84,9 @@ function itemCreate(name, desc, category, brand, price, size, likes, owner, cb) 
     }  );
   }
 
-function userCreate(username, password, cb) {
-  userDetail = {username: username, password: password} 
+async function userCreate(username, password, cb) {
+  const encryptedPW = await bcrypt.hash(password, 10);
+  userDetail = {username: username, password: encryptedPW} 
 
   var user = new User(userDetail);
 
@@ -152,7 +154,6 @@ function createItems(cb) {
 const creatingItemsCallback = function(err, results) {
 
     if (err) {
-        console.log('YOU BIG DUMB BITCH')
         console.error(err)
     }
     else {
