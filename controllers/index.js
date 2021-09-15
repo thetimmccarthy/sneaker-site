@@ -34,6 +34,15 @@ exports.index_get = function(req, res, next) {
     
   };
 
+  exports.index_logout = (req, res) => {
+    if (req.session) {
+        req.session.destroy();
+    }
+
+    console.log(req.session);
+    res.redirect('/');
+}
+
 
 // ****************
 // Helper functions for running multiple db queries in same route

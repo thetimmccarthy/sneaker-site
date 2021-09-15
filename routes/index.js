@@ -8,4 +8,6 @@ var indexController = require('../controllers/index')
 /* GET home page. */
 router.get('/', indexController.index_get);
 
+router.get('/logout', indexController.index_logout);
+
 module.exports = router;

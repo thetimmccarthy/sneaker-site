@@ -35,3 +35,10 @@ exports.login_post = async (req, res) => {
         }
     })
 }
+
+exports.login_logout = (req, res) => {
+    if (req.session) {
+        req.session.destroy();
+    }
+    res.redirect('/');
+}
