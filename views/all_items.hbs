@@ -1,5 +1,14 @@
 <div>
     <h2>Sneakers</h2>
+
+    {{#if session}}
+
+    <div class="form-floating">
+        <form method="GET" action="/item/new"> 
+            <input type="submit" value="Add Sneaker!" class="w-100 btn btn-lg btn-primary">
+        </form>
+    </div>
+{{/if}}
 {{#if items}}
 <div class="root">
     <div class="container">
@@ -25,6 +34,8 @@
         </div>
     </div>
 {{/if}}
+
+
     
 </div>
 
