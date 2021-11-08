@@ -5,3 +5,5 @@ A web app to display your shoe collection to the internet!
 - MongoDB database (also used for sessions implementation)
 
 Most of the backend work is done (I hope), but the front end is still a work in progress
+
+View the site at https://node-sneaker-site.herokuapp.com/
